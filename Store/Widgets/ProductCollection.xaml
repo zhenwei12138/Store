@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Store.Helper"
+		     xmlns:Widgets="clr-namespace:Store.Widgets" xmlns:VM="clr-namespace:Store.ViewModels" xmlns:models="clr-namespace:Store.Models"
+			 x:Class="Store.Widgets.ProductCollection">
+    <ContentView.Resources>
+        <local:StringToColorConverter x:Key="StringToColorConverter"/>
+        <local:ImageUrlResizeConverter x:Key="ImageUrlResizeConverter" />
+        <local:StringToBoolConverter x:Key="StringToBoolConverter" />
+    </ContentView.Resources>
+    <Frame CornerRadius="16" HasShadow="False" Padding="0" IsClippedToBounds="True">
+        
+	    <Grid IsClippedToBounds="True">
+            <AbsoluteLayout>
+                <Image
+                    Source="{Binding Model.CuratedCollectionDetails.ImageUrl, Converter={ StaticResource ImageUrlResizeConverter},ConverterParameter=30, Mode=OneWay}"
+                    AbsoluteLayout.LayoutFlags="All"
+                    AbsoluteLayout.LayoutBounds="1,1,1,1"
+                    Aspect="AspectFill"/>   
+                <!--<GraphicsView>
+                    <GraphicsView.P
+
+                </GraphicsView>-->
+                    
+            </AbsoluteLayout>
+            <Grid>
+                <BoxView>
+                    <BoxView.Background>
+                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                            <GradientStop Color="Transparent" Offset="0" />
+                            <GradientStop 
+                                Color="{Binding Model.CuratedCollectionDetails.BgColor, Converter={StaticResource StringToColorConverter}, Mode=OneWay}"
+                                Offset="1" />
+                        </LinearGradientBrush>
+                    </BoxView.Background>
+                </BoxView>
+
+                <Grid Padding="36,36,0,36">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="column0" />
+                        <ColumnDefinition x:Name="column1" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    
+                    
+                    <AbsoluteLayout Padding="0" Grid.Column="0" Grid.Row="0">
+                        <VerticalStackLayout>
+                            <Label 
+                                Text="{ Binding Model.Title }"
+                                Margin="0,24"
+                                Style="{ StaticResource TitleLabel}"
+                                />
+                            <Label 
+                                Text="{ Binding Model.Description}"
+                                Margin="0,0,0,36"
+                                Style="{ StaticResource DescriptionLabel }" />
+                             <Button 
+                                Text="查看全部"
+                                HorizontalOptions="Start"
+                                Style="{ StaticResource ButtonMedium }" />
+                        </VerticalStackLayout>
+                    </AbsoluteLayout>
+                    <AbsoluteLayout
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Padding="20,0"
+                        HeightRequest="224"
+                        x:Name="RightContent">
+                        <CollectionView
+                            AbsoluteLayout.LayoutFlags="All"
+                            AbsoluteLayout.LayoutBounds="0,0,1,1"
+                            ItemsSource="{ Binding ProductsList}"
+                            Scrolled="OnCollectionViewScrolled"
+                            HorizontalScrollBarVisibility="Never"
+                            ItemSizingStrategy="MeasureFirstItem"
+                            x:Name="ProductCollectionView">
+                            
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout
+                                    Orientation="Horizontal"
+                                    ItemSpacing="10"
+                                    x:Name="CollectionLayout"
+                                    
+                                    SnapPointsType="MandatorySingle"
+                                    SnapPointsAlignment="Start" />
+                                
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:ProductModel">
+                                    <Widgets:ProductCard/>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        <!--<ImageButton
+                            Source="left.png"
+                            x:Name="LeftButton"
+                            ZIndex="10"
+                            IsVisible="{ Binding LeftButtonVisiable}"
+                            CornerRadius="20"
+                            BackgroundColor="White"
+                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                            AbsoluteLayout.LayoutBounds="0,0.5,40,40"
+                            Clicked="LeftButton_Clicked"
+                            TranslationX="-20"
+                            />
+                        
+                        <ImageButton
+                            Source="right.png"
+                            x:Name="RightButton"
+                            ZIndex="10"
+                            IsVisible="{ Binding RightButtonVisiable}"
+                            TranslationX="20"
+                            CornerRadius="20"
+                            BackgroundColor="White"
+                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                            AbsoluteLayout.LayoutBounds="1,0.5,40,40"
+                            Clicked="RightButton_Clicked"
+                            />-->
+                        
+                    </AbsoluteLayout>
+                </Grid>
+	        </Grid>
+        </Grid>
+    </Frame>
+</ContentView>

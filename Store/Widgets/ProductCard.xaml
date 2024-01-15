@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Store.Helper"
+             x:Class="Store.Widgets.ProductCard"
+             BackgroundColor="Transparent"
+             Padding="0,3"
+             WidthRequest="{Binding ItemWidth}"
+             IsClippedToBounds="False"
+             >
+    <ContentView.Resources>
+        <local:StringToColorConverter x:Key="StringToColorConverter"/>
+        <local:ImageUrlResizeConverter x:Key="ImageUrlResizeConverter" />
+    </ContentView.Resources>
+
+   <Grid >
+       <VisualStateManager.VisualStateGroups>
+                 <VisualStateGroupList>
+                     <VisualStateGroup x:Name="CommonStates">
+                         <VisualState x:Name="Normal" />
+                         <VisualState x:Name="PointerOver">
+                             <VisualState.Setters>
+                                 <Setter Property="TranslationY" Value="-3"/>
+                                 <Setter TargetName="BottomView" Property="BackgroundColor" Value="{ AppThemeBinding Light={StaticResource White}, Dark={ StaticResource Black}}"/>
+                             </VisualState.Setters>
+                         </VisualState>
+                         <VisualState x:Name="Pressed">
+                             <VisualState.Setters>
+                                 <Setter Property="TranslationY" Value="0"/>
+                                 <Setter TargetName="BottomView" Property="BackgroundColor" Value="#A8FFFFFF"/>
+                             </VisualState.Setters>
+                         </VisualState>
+                     </VisualStateGroup>
+                 </VisualStateGroupList>
+             </VisualStateManager.VisualStateGroups>
+        <Frame Style="{StaticResource border}"/>
+        <Frame Style="{ StaticResource AppCard }" IsClippedToBounds="True">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="96"/>
+                </Grid.RowDefinitions>
+           
+                <Grid Grid.Row="0">
+                    <Grid>
+                        <AbsoluteLayout IsClippedToBounds="True">
+                            <Image
+                                Source="{ Binding Model.PdpImageUrl, Converter={ StaticResource ImageUrlResizeConverter}, ConverterParameter=30}"
+                                AbsoluteLayout.LayoutFlags="All"
+                                AbsoluteLayout.LayoutBounds="1,1,1,1"
+                                Aspect="Fill"
+                                WidthRequest="800"
+                                HeightRequest="800">
+                          
+                            </Image>
+                        </AbsoluteLayout>
+                        <Grid.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="Transparent" Offset="0"/>
+                                <GradientStop Color="{ Binding Model.IconUrlBackground, Converter={ StaticResource StringToColorConverter}, Mode=OneWay  }" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                    </Grid>
+                    <Frame
+                        CornerRadius="4"
+                        HasShadow="False"
+                        WidthRequest="80"
+                        HeightRequest="80"
+                        Padding="0"
+                        IsClippedToBounds="True">
+                        <Image Source="{ Binding Model.IconUrl, Converter={ StaticResource ImageUrlResizeConverter}, Mode=OneWay}"/>
+                    </Frame>
+                </Grid>
+
+            
+                <VerticalStackLayout HeightRequest="96" BackgroundColor="#A8FFFFFF" Padding="16,4,16,12"  Grid.Row="1" x:Name="BottomView">
+                    <Label
+                        MaxLines="2"
+                        Grid.Row="0"
+                        Text="{ Binding Model.Title}"
+                        Style="{ StaticResource AppItemName }" />
+
+        
+                    <FlexLayout Grid.Row="1" AlignItems="Center" JustifyContent="SpaceBetween">
+
+                        <FlexLayout AlignItems="Center" Direction="Row">
+                            <Label Text="{ Binding Model.AverageRating}" HeightRequest="14" Style="{ StaticResource AppItemRate }"/>
+                            <Image Source="star.png" Aspect="AspectFill" HeightRequest="10" WidthRequest="10" Margin="2,0,0,0"/>
+                        </FlexLayout>
+                        <Button
+                            Text="{ Binding Model.DisplayPrice}"
+                            HorizontalOptions="Start"
+                            Style="{ StaticResource ButtonSmall}"/>
+                    </FlexLayout>
+                </VerticalStackLayout>
+            </Grid>
+        </Frame>
+       
+   </Grid>
+</ContentView>
+
