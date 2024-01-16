@@ -43,28 +43,28 @@ public partial class ProductCollection : ContentView
                 item.ItemWidth = ItemWidth;
             }
             Console.Write(MaxCount);
-            ViewModel.ProductsList = ViewModel.Model.ProductsList.Select(m =>
-            {
-                var productsVm = new ProductsViewModel();
-                productsVm.ItemWidth = ItemWidth;
-                productsVm.Model = m;
-                return productsVm;
-            }).ToArray();
+            // ViewModel.ProductsList = ViewModel.Model.ProductsList.Select(m =>
+            // {
+            //     var productsVm = new ProductsViewModel();
+            //     productsVm.ItemWidth = ItemWidth;
+            //     productsVm.Model = m;
+            //     return productsVm;
+            // }).ToArray();
 
-            //if ((int)MaxCount > 0)
-            //{
-            //    ViewModel.ProductsList = ViewModel.Model.ProductsList.Take((int)MaxCount).Select(m =>
-            //    {
-            //        var productsVm = new ProductsViewModel();
-            //        productsVm.ItemWidth = ItemWidth;
-            //        productsVm.Model = m;
-            //        return productsVm;
-            //    }).ToArray();
-            //}
-            //else
-            //{
-            //    ViewModel.ProductsList = new ProductsViewModel[0];
-            //}
+            if ((int)MaxCount > 0)
+            {
+               ViewModel.ProductsList = ViewModel.Model.ProductsList.Take((int)MaxCount).Select(m =>
+               {
+                   var productsVm = new ProductsViewModel();
+                   productsVm.ItemWidth = ItemWidth;
+                   productsVm.Model = m;
+                   return productsVm;
+               }).ToArray();
+            }
+            else
+            {
+               ViewModel.ProductsList = new ProductsViewModel[0];
+            }
         }
     }
 
